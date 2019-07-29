@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<robot name="myTestRobot">
+    <link name="world"/>
+    <link name ="base_waist">
+              <visual>
+		            <geometry>
+				                  <mesh filename="package://testRobot_control/mesh/robot_waist.stl"/>
+						        </geometry>
+							      <origin xyz="0 0 0" rpy="0 0 0"/>
+							             <material name = "red">
+									            <color rgba="1.0 0.0 0.0 2.0"/>
+										          </material>
+											      </visual>
+    </link>
+    <joint name="base_joint" type="fixed">
+	    <parent link="world"/>
+	    <child link="base_waist"/>
+    </joint>
+    <joint name="upperLegL_joint" type="revolute">
+     <parent link="base_waist"/>
+     <child link="upperLegL"/>
+     <origin xyz="-0.072 0 0" rpy="0 0 0"/>
+     <axis xyz="1 0 0" />
+     <limit lower="-1.57" upper="1.57" effort="0.5" velocity="6.0"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.4"/>
+     </joint>
+
+    <link name ="upperLegL">
+     <visual>
+      <geometry>
+	      <mesh filename="package://testRobot_control/mesh/leg.stl"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+       <material name = "red">
+       <color rgba="1.0 0.0 0.0 2.0"/>
+      </material>
+    </visual>
+    </link>
+
+    <joint name="lowerLegL_joint" type="revolute">
+     <parent link="upperLegL"/>
+     <child link="lowerLegL"/>
+     <origin xyz="0 0 -0.235" rpy="0 0 0"/>
+     <axis xyz="1 0 0" />
+     <limit lower="-1.57" upper="1.57" effort="0.5" velocity="6.0"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.4"/>
+    </joint>
+
+    <link name ="lowerLegL">
+        <visual>
+		      <geometry>
+			                    <mesh filename="package://testRobot_control/mesh/leg.stl"/>
+					          </geometry>
+						        <origin xyz="0 0 0" rpy="0 0 0"/>
+							       <material name = "red">
+								              <color rgba="1.0 0.0 0.0 2.0"/>
+									            </material>
+									    </visual>
+    </link>
+
+    <joint name="footL_joint" type="revolute">
+     <parent link="lowerLegL"/>
+     <child link="footL"/>
+     <origin xyz="0 0 -0.235" rpy="0 0 0"/>
+     <axis xyz="1 0 0"/>
+     <limit lower="-1.57" upper="1.57" effort="0.5" velocity="6.0"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.4"/>
+    </joint>
+
+    <link name="footL">
+	         <visual>
+			       <geometry>
+				       <mesh filename="package://testRobot_control/mesh/robot_foot.stl"/>
+						           </geometry>
+							         <origin xyz="0 0 0" rpy="0 0 0"/>
+								        <material name = "red">
+										       <color rgba="1.0 0.0 0.0 2.0"/>
+										             </material>
+											         </visual>
+    </link>
+
+    <joint name="upperLegR_joint" type="revolute">
+     <parent link="base_waist"/>
+     <child link="upperLegR"/>
+     <origin xyz="0.072 0 0" rpy="0 0 0"/>
+     <axis xyz="1 0 0" />
+     <limit lower="-1.57" upper="1.57" effort="0.5" velocity="6.0"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.4"/>
+    </joint>
+
+    <link name ="upperLegR">
+         <visual>
+		       <geometry>
+			                     <mesh filename="package://testRobot_control/mesh/leg.stl"/>
+					           </geometry>
+						         <origin xyz="0 0 0" rpy="0 0 0"/>
+							        <material name = "red">
+									       <color rgba="1.0 0.0 0.0 2.0"/>
+									             </material>
+										         </visual>
+    </link>
+
+    <joint name="lowerLegR_joint" type="revolute">
+     <parent link="upperLegR"/>
+     <child link="lowerLegR"/>
+     <origin xyz="0 0 -0.235" rpy="0 0 0"/>
+     <axis xyz="1 0 0"/>
+     <limit lower="-1.57" upper="1.57" effort="0.5" velocity="6.0"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.4"/>
+    </joint>
+
+    <link name="lowerLegR">
+         <visual>
+	       <geometry>
+	                     <mesh filename="package://testRobot_control/mesh/leg.stl"/>
+		           </geometry>
+		         <origin xyz="0 0 0" rpy="0 0 0"/>
+		        <material name = "red">
+			       <color rgba="1.0 0.0 0.0 2.0"/>
+		             </material>
+		         </visual>     <visual>
+		       <geometry>
+		                     <mesh filename="package://testRobot_control/mesh/leg.stl"/>
+			           </geometry>
+			         <origin xyz="0 0 0" rpy="0 0 0"/>
+			        <material name = "red">
+				       <color rgba="1.0 0.0 0.0 2.0"/>
+			             </material>
+			         </visual>
+			 </link>
+
+    <joint name="footR_joint" type="revolute">
+     <parent link="lowerLegR"/>
+     <child link="footR"/>
+     <origin xyz="0 0 -0.235" rpy="0 0 0"/>
+     <axis xyz="1 0 0"/>
+     <limit lower="-1.57" upper="1.57" effort="0.5" velocity="6.0"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.4"/>
+    </joint>
+
+    <link name="footR">
+        <visual>
+		      <geometry>
+			                    <mesh filename="package://testRobot_control/mesh/robot_foot.stl"/>
+					          </geometry>
+						        <origin xyz="0 0 0" rpy="0 0 0"/>
+							       <material name = "red">
+								              <color rgba="1.0 0.0 0.0 2.0"/>
+									            </material>
+										        </visual>
+    </link>
+
+</robot>

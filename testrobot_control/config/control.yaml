@@ -1,0 +1,15 @@
+myTestRobot_simple_gazebo:
+   # Publish all joint states -----------------------------------
+     joint_state_controller: 
+       type: joint_state_controller/JointStateController 
+       publish_rate: 50
+   # Position Controllers ---------------------------------------
+     upperLegL_joint_position_controller:         
+       type: effort_controllers/JointPositionController   
+       joint: upperLegL_joint 
+       pid: { p: 6.0, i: 0.6, d: 0.06}   
+       #gazebo_ros_control/pid_gains:
+               # upperLegL_joint:
+                       #p:1.0
+                   #i:0.0
+                   #d:1.0    

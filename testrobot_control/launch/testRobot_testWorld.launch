@@ -1,0 +1,26 @@
+<launch>
+  <arg name="paused" default="true"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  <arg name="length0" default="1.0" />
+  <!--launch gazebo -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="physics" value="ode"/>
+    <arg name="world_name" value="testRobotWorld"/>
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="paused" value="$(arg paused)" />
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
+  <!-- spawn model -->
+    <arg name="model" default="$(find testrobot_control)/urdf/myTestRobot_simple_gazebo.urdf"/>
+    <param name="robot_description" command="$(find xacro)/xacro $(arg model) length:=$(arg length0) --inorder" />
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model testrobot_control -param robot_description"/>
+
+  <!-- launch control -->
+    <include file="$(find testrobot_control)/launch/testRobotControl.launch" />
+  <!-- control node cpp script -->
+    <node name="joint_control" pkg="testrobot_control" type="joint_control"/>
+</launch>

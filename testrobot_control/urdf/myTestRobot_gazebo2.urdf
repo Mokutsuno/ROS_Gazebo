@@ -1,0 +1,247 @@
+<?xml version="1.0"?>
+<robot name="myTestRobot">
+	<link name ="base_waist">
+            <inertial>
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
+	                      <mass value="1.0"/>
+	                    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+              </inertial>
+	      <visual>
+		            <geometry>
+				                  <mesh filename="package://testrobot_control/mesh/robot_waist.stl"/>
+						        </geometry>
+							      <origin xyz="0 0 0" rpy="0 0 0"/>
+							             <material name = "red">
+									            <color rgba="1.0 0.0 0.0 2.0"/>
+										          </material>
+											      </visual>
+    <collision>
+                                <geometry>
+					<mesh filename="package://testrobot_control/mesh/robot_waist.stl"/>	
+				</geometry>
+  </collision>
+										      </link>
+
+    <gazebo reference="base_waist">
+	    <material>Gazebo/Gray</material>
+	    <mu1 value="0.5" />
+	    <mu2 value="0.5" />
+    </gazebo>
+
+
+     <joint name="upperLegL_joint" type="revolute">
+     <parent link="base_waist"/>
+     <child link="upperLegL"/>
+     <origin xyz="-0.072 0 0" rpy="0 0 0"/>
+     <axis xyz="1 0 0" />
+     <limit lower="-1.57" upper="1.57" effort="10000" velocity="6.0"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.1"/>
+     </joint>
+
+     <transmission name="upperLegL_trans">
+	     <type>transmission_interface/SimpleTransmission</type>
+	         <joint name="upperLegL_joint">
+			 <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+			           </joint>
+				   <actuator name="upperLegL_motor">
+					   <hardwareInterface>PositionJointInterface</hardwareInterface>
+       <mechanismReduction>1</mechanismReduction>
+      </actuator>
+      </transmission>
+
+      <link name ="upperLegL">
+	         <inertial>
+			 <origin xyz="0 0 0" rpy="0 0 0"/>
+					                 <mass value="0.1"/>
+							                 <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+									         </inertial>
+
+
+	      <visual>
+      <geometry>
+	      <mesh filename="package://testrobot_control/mesh/leg.stl"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+       <material name = "red">
+       <color rgba="1.0 0.0 0.0 2.0"/>
+      </material>
+    </visual>
+
+    <collision>  
+	    <geometry> 
+		    <mesh filename="package://testrobot_control/mesh/leg.stl"/> 
+    </geometry>   
+    </collision> 
+    </link>
+
+    <gazebo reference="upperLegL">
+	    <material>Gazebo/Gray</material>
+	    <mu1 value="0.5"/>
+	    <mu2 value="0.5"/>
+    </gazebo>
+    <joint name="lowerLegL_joint" type="revolute">
+     <parent link="upperLegL"/>
+     <child link="lowerLegL"/>
+     <origin xyz="0 0 -0.235" rpy="0 0 0"/>
+     <axis xyz="1 0 0" />
+     <limit lower="-1.57" upper="1.57" effort="0.5" velocity="6.0"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.4"/>
+    </joint>
+
+    <link name ="lowerLegL">
+	   
+	           <inertial>
+			   <origin xyz="0 0 0" rpy="0 0 0"/>
+					                   <mass value="0.1"/>
+							                   <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+									           </inertial>
+
+
+	    <visual>
+		      <geometry>
+			                    <mesh filename="package://testrobot_control/mesh/leg.stl"/>
+					          </geometry>
+						        <origin xyz="0 0 0" rpy="0 0 0"/>
+							       <material name = "red">
+								              <color rgba="1.0 0.0 0.0 2.0"/>
+									            </material>
+									    </visual>
+									    <collision>                                                                     
+
+										    <geometry> 
+											    <mesh filename="package://testrobot_control/mesh/leg.stl"/> 
+										    </geometry>
+										       </collision>   
+									       </link>
+
+    <joint name="footL_joint" type="revolute">
+     <parent link="lowerLegL"/>
+     <child link="footL"/>
+     <origin xyz="0 0 -0.235" rpy="0 0 0"/>
+     <axis xyz="1 0 0"/>
+     <limit lower="-1.57" upper="1.57" effort="0.5" velocity="6.0"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.4"/>
+    </joint>
+
+    <link name="footL">
+	            <inertial>
+			    <origin xyz="0 0 0" rpy="0 0 0"/>
+					                    <mass value="0.1"/>
+							                    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+									            </inertial>
+
+
+	         <visual>
+			       <geometry>
+				                     <mesh filename="package://testrobot_control/mesh/robot_foot.stl"/>
+						           </geometry>
+							         <origin xyz="0 0 0" rpy="0 0 0"/>
+								        <material name = "red">
+										       <color rgba="1.0 0.0 0.0 2.0"/>
+										             </material>
+										     </visual>
+										     <collision>                                                                                                      
+											     <geometry>                                                                                                                                                                                                                             
+												     <mesh filename="package://testrobot_control/mesh/robot_foot.stl"/>                                                                                                                                                     
+											     </geometry>                                                                                                                                                                                                                   
+										     </collision>   
+    </link>
+
+    <joint name="upperLegR_joint" type="revolute">
+     <parent link="base_waist"/>
+     <child link="upperLegR"/>
+     <origin xyz="0.072 0 0" rpy="0 0 0"/>
+     <axis xyz="1 0 0" />
+     <limit lower="-1.57" upper="1.57" effort="0.5" velocity="6.0"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.4"/>
+    </joint>
+
+    <link name ="upperLegR">
+         <inertial>
+		 <origin xyz="0 0 0}" rpy="0 0 0"/>
+		 <mass value="0.1"/>
+                <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+        </inertial>
+
+ 	
+         <visual>
+		       <geometry>
+			       <mesh filename="package://testrobot_control/mesh/leg.stl"/>
+					           </geometry>
+						         <origin xyz="0 0 0" rpy="0 0 0"/>
+							        <material name = "red">
+									       <color rgba="1.0 0.0 0.0 2.0"/>
+									             </material>
+									     </visual>
+    <collision>                                                                                                                                                                                                                             <geometry>                                                                                                                                                                                                                              <mesh filename="package://testrobot_control/mesh/leg.stl"/>                                                                                                                                                     </geometry>                                                                                                                                                                                                                     </collision>   
+    </link>
+
+    <joint name="lowerLegR_joint" type="revolute">
+     <parent link="upperLegR"/>
+     <child link="lowerLegR"/>
+     <origin xyz="0 0 -0.235" rpy="0 0 0"/>
+     <axis xyz="1 0 0"/>
+     <limit lower="-1.57" upper="1.57" effort="0.5" velocity="6.0"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.4"/>
+    </joint>
+
+    <link name="lowerLegR">
+         <inertial>
+		 <origin xyz="0 0 0" rpy="0 0 0"/>
+		                     <mass value="0.1"/>
+		                       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+		          </inertial>
+
+
+	    <visual>
+	       <geometry>
+	                     <mesh filename="package://testrobot_control/mesh/leg.stl"/>
+		           </geometry>
+		         <origin xyz="0 0 0" rpy="0 0 0"/>
+		        <material name = "red">
+			       <color rgba="1.0 0.0 0.0 2.0"/>
+		             </material>
+		     </visual>  
+       <collision>                                                                                                                                                                                                                             <geometry>                                                                                                                                                                                                                              <mesh filename="package://testrobot_control/mesh/leg.stl"/>                                                                                                                                                     </geometry>                                                                                                                                                                                                                     </collision>   
+			 </link>
+
+    <joint name="footR_joint" type="revolute">
+     <parent link="lowerLegR"/>
+     <child link="footR"/>
+     <origin xyz="0 0 -0.235" rpy="0 0 0"/>
+     <axis xyz="1 0 0"/>
+     <limit lower="-1.57" upper="1.57" effort="0.5" velocity="6.0"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.4"/>
+    </joint>
+
+    <link name="footR">
+         <inertial>
+		 <origin xyz="0 0 0" rpy="0 0 0"/>
+		                    <mass value="0.1"/>
+		                       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+		           </inertial>
+
+
+	    <visual>
+		      <geometry>
+			                    <mesh filename="package://testrobot_control/mesh/robot_foot.stl"/>
+					          </geometry>
+						        <origin xyz="0 0 0" rpy="0 0 0"/>
+							       <material name = "red">
+								              <color rgba="1.0 0.0 0.0 2.0"/>
+									            </material>
+										        </visual>
+									    <collision>                                                                                                                                                                                                                             <geometry>                                                                                                                                                                                                                              <mesh filename="package://testrobot_control/mesh/robot_foot.stl"/>                                                                                                                                                     </geometry>                                                                                                                                                                                                                     </collision>       
+										</link>
+  <gazebo>
+	      <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+		            <robotNamespace>/test_robot</robotNamespace>
+			        </plugin>
+				  </gazebo>
+</robot>

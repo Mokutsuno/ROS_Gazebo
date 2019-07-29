@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<robot name="myTestRobot_simple_gazebo">
+	<link name ="base_waist">
+            <inertial>
+		    <origin xyz="0 0 0" rpy="0 0 0"/>
+	                      <mass value="1.0"/>
+	                    <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+              </inertial>
+	      <visual>
+		            <geometry>
+				                  <mesh filename="package://testrobot_control/mesh/robot_waist.stl"/>
+						        </geometry>
+							      <origin xyz="0 0 0" rpy="0 0 0"/>
+							             <material name = "red">
+									            <color rgba="1.0 0.0 0.0 2.0"/>
+										          </material>
+											      </visual>
+    <collision>
+                                <geometry>
+					<mesh filename="package://testrobot_control/mesh/robot_waist.stl"/>	
+				</geometry>
+  </collision>
+										      </link>
+
+    <gazebo reference="base_waist">
+	    <material>Gazebo/Gray</material>
+	    <mu1 value="0.5" />
+	    <mu2 value="0.5" />
+    </gazebo>
+
+
+     <joint name="upperLegL_joint" type="revolute">
+     <parent link="base_waist"/>
+     <child link="upperLegL"/>
+     <origin xyz="-0.072 0 0" rpy="0 0 0"/>
+     <axis xyz="1 0 0" />
+     <limit lower="-1.57" upper="1.57" effort="10000" velocity="0.5"/>
+     </joint>
+
+     <transmission name="upperLegL_tran">
+	     <type>transmission_interface/SimpleTransmission</type>
+	         <joint name="upperLegL_joint">
+	 <!--hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface-->
+ <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>				   
+	</joint>
+				   <actuator name="upperLegL_motor">
+					   <!--hardwareInterface>PositionJointInterface</hardwareInterface-->
+		<hardwareInterface>EffortJointInterface</hardwareInterface>
+       <mechanismReduction>1</mechanismReduction>
+      </actuator>
+      </transmission>
+
+      <link name ="upperLegL">
+	         <inertial>
+			 <origin xyz="0 0 0" rpy="0 0 0"/>
+					                 <mass value="0.1"/>
+							                 <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+									         </inertial>
+
+
+	      <visual>
+      <geometry>
+	      <mesh filename="package://testrobot_control/mesh/leg.stl"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+       <material name = "red">
+       <color rgba="1.0 0.0 0.0 2.0"/>
+      </material>
+    </visual>
+
+    <collision>  
+	    <geometry> 
+		    <mesh filename="package://testrobot_control/mesh/leg.stl"/> 
+    </geometry>   
+    </collision> 
+    </link>
+
+    <gazebo reference="upperLegL">
+	    <material>Gazebo/Gray</material>
+	    <mu1 value="0.5"/>
+	    <mu2 value="0.5"/>
+   </gazebo>	
+   <gazebo> 
+	   <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+		   <robotNamespace>/myTestRobot_simple_gazebo</robotNamespace>
+			   </plugin>
+   </gazebo>   
+</robot>
