@@ -23,4 +23,5 @@
     <include file="$(find testrobot_control)/launch/testRobotControl.launch" />
   <!-- control node cpp script -->
     <node name="joint_control" pkg="testrobot_control" type="joint_control"/>
+    <node name="joint_subscribe" pkg="testrobot_control" type="joint_subscribe"/>
 </launch>

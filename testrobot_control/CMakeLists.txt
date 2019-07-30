@@ -11,14 +11,14 @@ project(testrobot_control)
 #set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
 #set (CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} -g")
 #list(APPEND CMAKE_PREFIX_PATH ${PYTHON_DIR})
-find_package(catkin REQUIRED COMPONENTS 
-	PythonLibs REQUIRED
-	roscpp
-	visualization_msgs
+set(PYTHON_VERSION "2.7" CACHE STRING "Python Version touse")
+find_package(PythonLibs EXACT ${PYTHON_VERSION} MODULE REQUIRED)
+find_package(catkin REQUIRED COMPONENTS roscpp)
+find_package(PythonLibs REQUIRED)
+find_package(visualization_msgs)
 	#gazebo_msgs
-	tf
-	genmsg
-	)
+find_package(tf)
+find_package(genmsg)
 
 
 ## System dependencies are found with CMake's conventions
