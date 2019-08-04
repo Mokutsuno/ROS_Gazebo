@@ -1,0 +1,372 @@
+<?xml version="1.0"?>
+<robot name="Struthio_mk1">
+	<link name ="link_base">
+            <inertial>
+		    <origin xyz="0 0.03 0.02" rpy="0 0 0"/>
+	                      <mass value="0.050"/>
+	                    <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0.0" izz="0.0"/>
+              </inertial>
+	      <visual>
+		            <geometry>
+				                  <mesh filename="package://Struthio_mk1/mesh/link_base_b.stl"/>
+						        </geometry>
+							      <origin xyz="0 0 0" rpy="0 0 0"/>
+							             <material name = "red">
+									            <color rgba="1.0 0.0 0.0 2.0"/>
+										          </material>
+											      </visual>
+    <!--collision-->
+                                <!--geometry-->
+					<!--mesh filename="package://Struthio_mk1/mesh/link_base.stl"/-->	
+				<!--/geometry-->
+  <!--/collisioa-->
+										      </link>
+
+    <gazebo reference="link_base">
+	    <material>Gazebo/Gray</material>
+	    <mu1 value="0.5" />
+	    <mu2 value="0.5" />
+    </gazebo>
+
+      <link name ="link_battery">
+                 <inertial>
+                         <origin xyz="0 -0.08 0.02" rpy="0 0 0"/>
+                                                         <mass value="0.050"/>
+                                                                         <inertia ixx="0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0" izz="0"/>
+                                                                                 </inertial>
+
+
+              <visual>
+      <geometry>
+              <mesh filename="package://Struthio_mk1/mesh/link_battery_b.stl"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+       <material name = "red">
+       <color rgba="1.0 0.0 0.0 2.0"/>
+      </material>
+    </visual>
+
+    <collision>
+            <geometry>
+                    <mesh filename="package://Struthio_mk1/mesh/link_battery_b.stl"/>
+    </geometry>
+    </collision>
+    </link>
+
+    <gazebo reference="link_battery">
+            <material>Gazebo/Gray</material>
+            <mu1 value="0.5"/>
+            <mu2 value="0.5"/>
+    </gazebo>
+
+    <joint name="joint_battery" type="revolute">
+     <parent link="link_base"/>
+     <child link="link_battery"/>
+     <origin xyz="0 0.01 0.02" rpy="0 0 0"/>
+     <axis xyz="0 0 1" />
+     <limit lower="-1.57" upper="-0.007" effort="0.49" velocity="50"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.4"/>
+    </joint>
+
+     <transmission name="tran_battery">
+	     <type>transmission_interface/SimpleTransmission</type>
+	     <joint name="joint_battery">
+	 <!--hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface-->
+ <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>				   
+	</joint>
+				   <actuator name="motor_battery">
+					   <!--hardwareInterface>PositionJointInterface</hardwareInterface-->
+		<hardwareInterface>EffortJointInterface</hardwareInterface>
+       <mechanismReduction>1</mechanismReduction>
+      </actuator>
+      </transmission>
+
+
+     <joint name="joint_upperLegL" type="revolute">
+     <parent link="link_base"/>
+     <child link="link_upperLegL"/>
+     <origin xyz="0.045 -0.027 0.0123" rpy="-0.3 0 0"/>
+     <axis xyz="1 0 0" />
+     <limit lower="-1.57" upper="1.57" effort="0.49" velocity="50.0"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.1"/>
+     </joint>
+
+     <transmission name="tran_upperLegL">
+	     <type>transmission_interface/SimpleTransmission</type>
+	         <joint name="joint_upperLegL">
+			 <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+			           </joint>
+				   <actuator name="motor_upperLegL">
+					   <hardwareInterface>EffortJointInterface</hardwareInterface>
+       <mechanismReduction>1</mechanismReduction>
+      </actuator>
+      </transmission>
+
+      <link name ="link_upperLegL">
+	         <inertial>
+			 <origin xyz="0 0.01 0.0" rpy="0 0 0"/>
+					                 <mass value="0.03"/>
+							                 <inertia ixx="0.0" ixy="0" ixz="0" iyy="0.0" iyz="0" izz="0"/>
+									         </inertial>
+
+
+	      <visual>
+      <geometry>
+	      <mesh filename="package://Struthio_mk1/mesh/link_upperLegL_b.stl"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+       <material name = "red">
+       <color rgba="1.0 0.0 0.0 2.0"/>
+      </material>
+    </visual>
+
+    <collision>  
+	    <geometry> 
+		    <mesh filename="package://Struthio_mk1/mesh/link_upperLegL_b.stl"/> 
+    </geometry>   
+    </collision> 
+    </link>
+
+    <gazebo reference="link_upperLegL">
+	    <material>Gazebo/Gray</material>
+	    <mu1 value="0.5"/>
+	    <mu2 value="0.5"/>
+    </gazebo>
+
+    <joint name="joint_lowerLegL" type="revolute">
+     <parent link="link_upperLegL"/>
+     <child link="link_lowerLegL"/>
+     <origin xyz="0 0.047 -0.007" rpy="1.57 0 0"/>
+     <axis xyz="1 0 0" />
+     <limit lower="-1.57" upper="-0.007" effort="0.49" velocity="50"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.4"/>
+    </joint>
+     <transmission name="tran_lowerLegL">
+             <type>transmission_interface/SimpleTransmission</type>
+                 <joint name="joint_lowerLegL">
+                         <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                                   </joint>
+                                   <actuator name="motor_lowerLegL">
+                                           <hardwareInterface>EffortJointInterface</hardwareInterface>
+       <mechanismReduction>1</mechanismReduction>
+      </actuator>
+      </transmission>
+
+    <link name ="link_lowerLegL">
+	   
+	           <inertial>
+			   <origin xyz="0 -0.023 -0.014" rpy="0 0 0"/>
+					                   <mass value="0.012"/>
+							                   <inertia ixx="0.0" ixy="0" ixz="0" iyy="0.0" iyz="0" izz="0.0"/>
+									           </inertial>
+
+
+	    <visual>
+		      <geometry>
+			                    <mesh filename="package://Struthio_mk1/mesh/link_lowerLegL_b.stl"/>
+					          </geometry>
+						        <origin xyz="0 0 0" rpy="0 0 0"/>
+							       <material name = "red">
+								              <color rgba="1.0 0.0 0.0 2.0"/>
+									            </material>
+									    </visual>
+									    <collision>                                                                     
+
+										    <geometry> 
+											    <mesh filename="package://Struthio_mk1/mesh/link_lowerLegL_b.stl"/> 
+										    </geometry>
+										       </collision>   
+									       </link>
+
+    <joint name="joint_footL" type="revolute">
+     <parent link="link_lowerLegL"/>
+     <child link="link_footL"/>
+     <origin xyz="-0.01 -0.125 -0.005" rpy="-1.2 0 0"/>
+     <axis xyz="1 0 0"/>
+     <limit lower="-1.57" upper="1.57" effort="0.49" velocity="50"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.4"/>
+    </joint>
+     <transmission name="tran_footL">
+             <type>transmission_interface/SimpleTransmission</type>
+                 <joint name="joint_footL">
+                         <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                                   </joint>
+                                   <actuator name="motor_footL">
+                                           <hardwareInterface>EffortJointInterface</hardwareInterface>
+       <mechanismReduction>1</mechanismReduction>
+      </actuator>
+      </transmission>
+
+    <link name="link_footL">
+                    <inertial>
+                            <origin xyz="0 0.015 0" rpy="0 0 0"/>
+                                                            <mass value="0.002"/>
+                                                                            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+                                                                                    </inertial>
+	         <visual>
+			       <geometry>
+				                     <mesh filename="package://Struthio_mk1/mesh/link_footL_b.stl"/>
+						           </geometry>
+							         <origin xyz="0 0 0" rpy="0 0 0"/>
+								        <material name = "red">
+										       <color rgba="1.0 0.0 0.0 2.0"/>
+										             </material>
+										     </visual>
+										     <collision>                                                                                                      
+											     <geometry>                                                                                                                                                                                                                             
+												     <mesh filename="package://Struthio_mk1/mesh/link_footL_b.stl"/>                                                                                                                                                     
+											     </geometry>                                                                                                                                                                                                                   
+										     </collision>   
+									     </link>
+
+	 <joint name="joint_upperLegR" type="revolute">
+     <parent link="link_base"/>
+     <child link="link_upperLegR"/>
+     <origin xyz="-0.045 -0.027 0.0123" rpy="-0.3 0 0"/>
+     <axis xyz="1 0 0" />
+     <limit lower="-1.57" upper="1.57" effort="0.49" velocity="50.0"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.1"/>
+     </joint>
+
+     <transmission name="tran_upperLegR">
+             <type>transmission_interface/SimpleTransmission</type>
+                 <joint name="joint_upperLegR">
+                         <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                                   </joint>
+                                   <actuator name="motor_upperLegR">
+                                           <hardwareInterface>EffortJointInterface</hardwareInterface>
+       <mechanismReduction>1</mechanismReduction>
+      </actuator>
+      </transmission>
+
+      <link name ="link_upperLegR">
+                 <inertial>
+			 <origin xyz="0 0.01 0.0" rpy="0 0 0"/>
+                                                         <mass value="0.03"/>
+                                                                         <inertia ixx="0.0" ixy="0" ixz="0" iyy="0.0" iyz="0" izz="0"/>
+                                                                                 </inertial>
+              <visual>
+      <geometry>
+              <mesh filename="package://Struthio_mk1/mesh/link_upperLegR_b.stl"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+       <material name = "red">
+       <color rgba="1.0 0.0 0.0 2.0"/>
+      </material>
+    </visual>
+
+    <collision>
+            <geometry>
+                    <mesh filename="package://Struthio_mk1/mesh/link_upperLegR_b.stl"/>
+    </geometry>
+    </collision>
+    </link>
+
+    <gazebo reference="link_upperLegR">
+            <material>Gazebo/Gray</material>
+            <mu1 value="0.5"/>
+            <mu2 value="0.5"/>
+    </gazebo>
+
+    <joint name="joint_lowerLegR" type="revolute">
+     <parent link="link_upperLegR"/>
+     <child link="link_lowerLegR"/>
+     <origin xyz="0 0.047 -0.007" rpy="1.57 0 0"/>
+     <axis xyz="1 0 0" />
+     <limit lower="-1.57" upper="-0.007" effort="0.49" velocity="50"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.4"/>
+    </joint>
+         <transmission name="tran_lowerLegR">
+             <type>transmission_interface/SimpleTransmission</type>
+                 <joint name="joint_lowerLegR">
+                         <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                                   </joint>
+                                   <actuator name="motor_lowerLegR">
+                                           <hardwareInterface>EffortJointInterface</hardwareInterface>
+       <mechanismReduction>1</mechanismReduction>
+      </actuator>
+      </transmission>
+
+    <link name ="link_lowerLegR">
+                   <inertial>
+                           <origin xyz="0 -0.023 -0.014" rpy="0 0 0"/>
+                                                           <mass value="0.012"/>
+                                                                           <inertia ixx="0.0" ixy="0" ixz="0" iyy="0.0" iyz="0" izz="0.0"/>
+                                                                                   </inertial>
+            <visual>
+                      <geometry>
+                                            <mesh filename="package://Struthio_mk1/mesh/link_lowerLegR_b.stl"/>
+                                                  </geometry>
+                                                        <origin xyz="0 0 0" rpy="0 0 0"/>
+                                                               <material name = "red">
+                                                                              <color rgba="1.0 0.0 0.0 2.0"/>
+                                                                                    </material>
+                                                                            </visual>
+                                                                            <collision>
+
+                                                                                    <geometry>
+                                                                                            <mesh filename="package://Struthio_mk1/mesh/link_lowerLegR_b.stl"/>
+                                                                                    </geometry>
+                                                                                       </collision>
+                                                                               </link>
+
+    <joint name="joint_footR" type="revolute">
+     <parent link="link_lowerLegR"/>
+     <child link="link_footR"/>
+     <origin xyz="0.01 -0.125 -0.005" rpy="-1.2 0 0"/>
+     <axis xyz="1 0 0"/>
+     <limit lower="-1.57" upper="1.57" effort="0.49" velocity="50"/>
+     <friction friction="0.01"/>
+     <dynamics damping="0.4"/>
+    </joint>
+         <transmission name="tran_footR">
+             <type>transmission_interface/SimpleTransmission</type>
+                 <joint name="joint_footR">
+                         <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                                   </joint>
+                                   <actuator name="motor_footR">
+                                           <hardwareInterface>EffortJointInterface</hardwareInterface>
+       <mechanismReduction>1</mechanismReduction>
+      </actuator>
+      </transmission>
+
+    <link name="link_footR">
+                    <inertial>
+                            <origin xyz="0 0.015 0" rpy="0 0 0"/>
+                                                            <mass value="0.002"/>
+                                                                            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+                                                                                    </inertial>
+
+
+                 <visual>
+                               <geometry>
+                                                     <mesh filename="package://Struthio_mk1/mesh/link_footR_b.stl"/>
+                                                           </geometry>
+                                                                 <origin xyz="0 0 0" rpy="0 0 0"/>
+                                                                        <material name = "red">
+                                                                                       <color rgba="1.0 0.0 0.0 2.0"/>
+                                                                                             </material>
+                                                                                     </visual>
+                                                                                     <collision>
+                                                                                             <geometry>                                                                                                        
+                                                                                                     <mesh filename="package://Struthio_mk1/mesh/link_footR_b.stl"/>                                           
+                                                                                             </geometry>                                                                                                       
+                                                                                     </collision>
+                                                                             </link>
+
+
+
+
+  <gazebo>
+	      <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+		            <robotNamespace>/Struthio_mk1</robotNamespace>
+			        </plugin>
+				  </gazebo>
+			  
+			  </robot>

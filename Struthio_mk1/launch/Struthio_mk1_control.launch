@@ -1,0 +1,12 @@
+<launch>
+
+  <rosparam file="$(find Struthio_mk1)/config/control.yaml" command="load"/>
+
+  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
+
+   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/Struthio_mk1" args="joint_battery_position_controller joint_upperLegL_position_controller joint_lowerLegL_position_controller joint_upperLegR_position_controller joint_lowerLegR_position_controller joint_footL_position_controller joint_footR_position_controller joint_state_controller"/>
+   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+   <remap from="/joint_states" to="/Struthio_mk1/joint_states" />
+   </node>
+</launch>
+

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+<node name="model_tf_publisher" pkg="Struthio_mk1" type="model_tf_publisher">
+      <param name="model_name" value="Struthio_mk1" />
+      <param name="base_frame" value="link_base" />
+      <param name="world_frame" value="odom" />
+    </node>
+</launch>

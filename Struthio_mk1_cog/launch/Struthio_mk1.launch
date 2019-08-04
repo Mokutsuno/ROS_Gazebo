@@ -1,0 +1,33 @@
+<launch>
+  <arg name="paused" default="true"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  <arg name="length0" default="1.0" />
+  <!--launch gazebo -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="physics" value="ode"/>
+    <arg name="world_name" value="Struthio_mk1_World"/>
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="paused" value="$(arg paused)" />
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
+
+  <!--arg name="rvizconfig" default="$(find Struthio_mk1)/rviz/jsk_rviz1.rviz" /-->
+  <arg name="rvizconfig" default="$(find Struthio_mk1)/rviz/Struthio_mk1.rviz" /> 
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true"/>
+  <!-- spawn model -->
+    <arg name="model" default="$(find Struthio_mk1)/urdf/Struthio_mk1.urdf"/>
+    <param name="robot_description" command="$(find xacro)/xacro $(arg model) length:=$(arg length0) --inorder" />
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model Struthio_mk1  -param robot_description"/>
+
+  <!-- launch control -->
+    <include file="$(find Struthio_mk1)/launch/Struthio_mk1_control.launch" />
+    <include file="$(find Struthio_mk1)/launch/model_tf_publisher.launch" />
+  <!-- control node cpp script -->
+    <!--node name="joint_control" pkg="Struthio_mk1" type="joint_control"/-->
+    <!--node name="joint_subscribe" pkg="Struthio_mk1" type="joint_subscribe"/-->
+    <node name="jointControl" pkg="Struthio_mk1" type="jointControl" />
+</launch>

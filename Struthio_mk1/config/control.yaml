@@ -1,0 +1,41 @@
+Struthio_mk1:
+   # Publish all joint states -----------------------------------
+     joint_state_controller: 
+       type: joint_state_controller/JointStateController 
+       publish_rate: 50
+   # Position Controllers ---------------------------------------
+     joint_battery_position_controller:         
+       type: effort_controllers/JointPositionController   
+       joint: joint_battery
+       pid: { p: 6.0, i: 0.6, d: 0.06}   
+     joint_upperLegL_position_controller:
+       type: effort_controllers/JointPositionController
+       joint: joint_upperLegL
+       pid: { p: 6.0, i: 0.6, d: 0.06}
+     joint_lowerLegL_position_controller:
+       type: effort_controllers/JointPositionController
+       joint: joint_lowerLegL
+       pid: { p: 6.0, i: 0.6, d: 0.06}
+     joint_upperLegR_position_controller:
+       type: effort_controllers/JointPositionController
+       joint: joint_upperLegR
+       pid: { p: 6.0, i: 0.6, d: 0.06}
+     joint_lowerLegR_position_controller:
+       type: effort_controllers/JointPositionController
+       joint: joint_lowerLegR
+       pid: { p: 6.0, i: 0.6, d: 0.06}
+     joint_footL_position_controller:
+       type: effort_controllers/JointPositionController
+       joint: joint_footL
+       pid: { p: 6.0, i: 0.6, d: 0.06}
+     joint_footR_position_controller:
+       type: effort_controllers/JointPositionController
+       joint: joint_footR
+       pid: { p: 6.0, i: 0.6, d: 0.06}
+
+
+       #gazebo_ros_control/pid_gains:
+               # upperLegL_joint:
+                       #p:1.0
+                   #i:0.0
+                   #d:1.0    
